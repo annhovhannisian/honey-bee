@@ -1,0 +1,1544 @@
+<!doctype html>
+<html lang="hy">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Մեղրի Տուն — բնական մեղր ուղիղ փեթակից</title>
+<meta name="description" content="Մեղրի Տուն — Հայաստանի լեռնային մարգագետինների բնական մեղր՝ առանց ջերմամշակման և հավելումների։ Ծաղկային, ակացիայի, լեռնային և այլ տեսակներ։">
+<meta name="theme-color" content="#241A0E">
+
+<!-- Mark scripting as available before first paint, so the reveal
+     animations only hide content when JS can bring it back. -->
+<script>document.documentElement.classList.add('js');</script>
+
+<!-- Bootstrap 5 (CDN) -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Google Fonts: Armenian-capable serif + sans, plus a display face for numerals -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Armenian:wght@500;600;700;800&family=Noto+Sans+Armenian:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
+
+<style>
+/* =========================================================
+   1. DESIGN TOKENS
+   ========================================================= */
+:root{
+  /* Palette */
+  --honey:#E8A317;
+  --honey-deep:#C67C0B;
+  --amber-ink:#8A5A06;          /* darkened amber: passes AA for small text on cream */
+  --brown:#241A0E;
+  --brown-70:#4A3A28;           /* body copy on cream */
+  --cream:#FDF6E8;
+  --cream-2:#F6EBD4;
+  --white:#FFFFFF;
+
+  /* Depth — always warm, never neutral grey */
+  --line:rgba(36,26,14,.10);
+  --shadow-1:0 2px 10px rgba(36,26,14,.06);
+  --shadow-2:0 18px 38px -20px rgba(36,26,14,.42);
+  --shadow-3:0 34px 64px -26px rgba(36,26,14,.52);
+  --glow-honey:0 14px 28px -12px rgba(198,124,11,.55);
+
+  /* Geometry & motion */
+  --r-lg:28px;
+  --r-md:18px;
+  --r-sm:12px;
+  --ease:cubic-bezier(.22,.61,.36,1);
+  --nav-h:74px;
+
+  /* Signature motif: one tileable honeycomb SVG in two colour variants */
+  --hex-honey:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100'%3E%3Cg fill='none' stroke='%23E8A317' stroke-width='2'%3E%3Cpath d='M28,66L0,50L0,16L28,0L56,16L56,50L28,66L28,100'/%3E%3Cpath d='M28,0L28,34L0,50L0,84L28,100L56,84L56,50L28,34'/%3E%3C/g%3E%3C/svg%3E");
+  --hex-brown:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100'%3E%3Cg fill='none' stroke='%23241A0E' stroke-width='2'%3E%3Cpath d='M28,66L0,50L0,16L28,0L56,16L56,50L28,66L28,100'/%3E%3Cpath d='M28,0L28,34L0,50L0,84L28,100L56,84L56,50L28,34'/%3E%3C/g%3E%3C/svg%3E");
+
+  --bs-body-font-family:'Noto Sans Armenian', system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+
+/* =========================================================
+   2. BASE
+   ========================================================= */
+*{ -webkit-tap-highlight-color:transparent; }
+
+html{ scroll-behavior:smooth; scroll-padding-top:calc(var(--nav-h) + 18px); }
+
+body{
+  font-family:var(--bs-body-font-family);
+  background:var(--cream);
+  color:var(--brown-70);
+  font-size:1.0125rem;
+  line-height:1.72;
+  overflow-x:hidden;
+}
+
+h1,h2,h3,h4,.serif{
+  font-family:'Noto Serif Armenian', Georgia, serif;
+  color:var(--brown);
+  font-weight:700;
+  line-height:1.16;
+  letter-spacing:-.015em;
+}
+
+a{ color:var(--amber-ink); text-decoration:none; transition:color .25s var(--ease); }
+a:hover{ color:var(--honey-deep); }
+
+img{ display:block; max-width:100%; }
+
+::selection{ background:var(--honey); color:var(--brown); }
+
+/* On-brand focus ring, visible on both light and dark surfaces */
+:focus-visible{ outline:3px solid var(--honey); outline-offset:3px; border-radius:6px; }
+
+.skip-link{
+  position:fixed; top:10px; left:50%; transform:translate(-50%,-200%);
+  z-index:2000; background:var(--brown); color:var(--cream);
+  padding:.7rem 1.2rem; border-radius:999px; font-weight:600;
+  transition:transform .25s var(--ease);
+}
+.skip-link:focus{ transform:translate(-50%,0); color:var(--cream); }
+
+/* =========================================================
+   3. REUSABLE PIECES
+   ========================================================= */
+.container{ max-width:1200px; }
+.section{ padding:clamp(72px,10vw,128px) 0; }
+.section-alt{ background:var(--cream-2); }
+
+/* Small-caps label with a hexagon bullet */
+.eyebrow{
+  display:inline-flex; align-items:center; gap:.6rem;
+  font-size:.78rem; font-weight:700; letter-spacing:.16em;
+  text-transform:uppercase; color:var(--amber-ink);
+  margin:0 0 1rem;
+}
+.eyebrow::before{
+  content:''; flex:none; width:11px; height:12px; background:var(--honey);
+  clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);
+}
+.eyebrow-light{ color:var(--honey); }
+
+.h-hero{ font-size:clamp(2.5rem,6.2vw,4.5rem); letter-spacing:-.028em; }
+.h-section{ font-size:clamp(1.95rem,4vw,3.05rem); }
+.accent{ color:var(--honey); }
+
+.lead-txt{ font-size:clamp(1.02rem,1.25vw,1.16rem); max-width:60ch; }
+.lead-light{ color:rgba(253,246,232,.78); }
+
+/* Decorative numerals use the display face */
+.num{ font-family:'Fraunces', Georgia, serif; font-weight:700; font-variant-numeric:lining-nums; }
+
+/* ---------- Buttons (fully custom — no Bootstrap button classes) ---------- */
+.btn-honey,
+.btn-outline-brown,
+.btn-outline-cream{
+  --y:0px;
+  display:inline-flex; align-items:center; justify-content:center; gap:.55rem;
+  font-family:inherit; font-weight:700; font-size:1rem; line-height:1;
+  padding:1rem 1.9rem; border-radius:999px; border:2px solid transparent;
+  cursor:pointer; white-space:nowrap; text-align:center;
+  transform:translateY(var(--y));
+  transition:transform .3s var(--ease), box-shadow .3s var(--ease),
+             background .3s var(--ease), color .3s var(--ease), border-color .3s var(--ease);
+}
+.btn-honey{
+  background:linear-gradient(135deg,var(--honey) 0%,var(--honey-deep) 100%);
+  color:var(--brown);
+  box-shadow:var(--glow-honey);
+}
+.btn-honey:hover{ --y:-3px; color:var(--brown); box-shadow:0 20px 34px -12px rgba(198,124,11,.68); }
+.btn-honey:active{ --y:-1px; }
+.btn-honey:disabled{ opacity:.42; box-shadow:none; cursor:not-allowed; --y:0px; }
+
+.btn-outline-brown{ border-color:rgba(36,26,14,.24); color:var(--brown); background:transparent; }
+.btn-outline-brown:hover{ --y:-3px; border-color:var(--brown); background:var(--brown); color:var(--cream); }
+
+.btn-outline-cream{ border-color:rgba(253,246,232,.36); color:var(--cream); background:rgba(253,246,232,.05); }
+.btn-outline-cream:hover{ --y:-3px; border-color:var(--cream); background:var(--cream); color:var(--brown); }
+
+/* ---------- Scroll reveal ----------
+   Gated behind .js so the content is never left invisible when scripting
+   is unavailable and the observer never runs. */
+.js .reveal{
+  opacity:0; transform:translateY(26px);
+  transition:opacity .75s var(--ease), transform .75s var(--ease);
+  transition-delay:var(--d,0s);
+}
+.js .reveal.is-visible{ opacity:1; transform:none; }
+
+@media (prefers-reduced-motion:reduce){
+  html{ scroll-behavior:auto; }
+  .js .reveal{ opacity:1; transform:none; transition:none; }
+  *,*::before,*::after{ animation-duration:.001ms !important; animation-iteration-count:1 !important; }
+}
+
+/* Graceful placeholder when a remote photo fails to load */
+.media-fallback{
+  background-color:var(--honey-deep);
+  background-image:var(--hex-brown), linear-gradient(135deg,var(--honey),var(--honey-deep));
+  background-size:56px 100px, cover;
+  background-blend-mode:soft-light, normal;
+}
+
+/* =========================================================
+   4. NAVBAR
+   ========================================================= */
+.site-nav{
+  background:rgba(253,246,232,.80);
+  backdrop-filter:saturate(180%) blur(14px);
+  -webkit-backdrop-filter:saturate(180%) blur(14px);
+  border-bottom:1px solid transparent;
+  transition:background .35s var(--ease), box-shadow .35s var(--ease), border-color .35s var(--ease);
+  padding-block:.55rem;
+  min-height:var(--nav-h);
+}
+.site-nav.is-scrolled{
+  background:rgba(253,246,232,.96);
+  border-bottom-color:var(--line);
+  box-shadow:0 10px 30px -22px rgba(36,26,14,.6);
+}
+
+.brand{ display:inline-flex; align-items:center; gap:.65rem; color:var(--brown); }
+.brand:hover{ color:var(--brown); }
+.brand-mark{ width:38px; height:38px; color:var(--honey); flex:none; transition:transform .5s var(--ease); }
+.brand:hover .brand-mark{ transform:rotate(-12deg) scale(1.06); }
+.brand-name{
+  font-family:'Noto Serif Armenian',Georgia,serif; font-weight:800;
+  font-size:1.22rem; letter-spacing:-.02em; line-height:1;
+}
+
+.nav-link-x{
+  position:relative; display:inline-block;
+  font-weight:600; font-size:.98rem; color:var(--brown-70);
+  padding:.5rem .2rem;
+  transition:color .25s var(--ease);
+}
+.nav-link-x::after{
+  content:''; position:absolute; left:0; right:0; bottom:.15rem; height:2px;
+  background:var(--honey); border-radius:2px;
+  transform:scaleX(0); transform-origin:left; transition:transform .35s var(--ease);
+}
+.nav-link-x:hover,
+.nav-link-x.is-active{ color:var(--brown); }
+.nav-link-x:hover::after,
+.nav-link-x.is-active::after{ transform:scaleX(1); }
+
+/* Cart trigger + live badge */
+.cart-btn{
+  position:relative; display:inline-flex; align-items:center; justify-content:center;
+  width:48px; height:48px; border-radius:50%; border:0;
+  background:var(--brown); color:var(--cream); cursor:pointer;
+  box-shadow:var(--shadow-1);
+  transition:transform .3s var(--ease), box-shadow .3s var(--ease), background .3s var(--ease);
+}
+.cart-btn:hover{ transform:translateY(-2px); background:var(--honey-deep); box-shadow:var(--glow-honey); }
+.cart-btn svg{ width:22px; height:22px; }
+.cart-badge{
+  position:absolute; top:-3px; right:-3px; min-width:22px; height:22px; padding:0 6px;
+  display:grid; place-items:center; border-radius:999px;
+  background:var(--honey); color:var(--brown);
+  font-size:.72rem; font-weight:700; line-height:1;
+  border:2px solid var(--cream);
+}
+.cart-badge[hidden]{ display:none; }
+.cart-btn.bump{ animation:bump .45s var(--ease); }
+@keyframes bump{ 0%,100%{ transform:translateY(0) scale(1); } 35%{ transform:translateY(-4px) scale(1.14); } }
+
+.navbar-toggler{ border:0; padding:.35rem .5rem; }
+.navbar-toggler:focus{ box-shadow:none; }
+.burger{ width:26px; height:18px; position:relative; display:block; }
+.burger span{
+  position:absolute; left:0; height:2px; width:100%; background:var(--brown); border-radius:2px;
+  transition:transform .35s var(--ease), opacity .25s var(--ease);
+}
+.burger span:nth-child(1){ top:0; }
+.burger span:nth-child(2){ top:8px; }
+.burger span:nth-child(3){ top:16px; }
+.navbar-toggler[aria-expanded="true"] .burger span:nth-child(1){ transform:translateY(8px) rotate(45deg); }
+.navbar-toggler[aria-expanded="true"] .burger span:nth-child(2){ opacity:0; }
+.navbar-toggler[aria-expanded="true"] .burger span:nth-child(3){ transform:translateY(-8px) rotate(-45deg); }
+
+@media (max-width:991.98px){
+  .nav-panel{
+    background:var(--cream); border:1px solid var(--line); border-radius:var(--r-md);
+    padding:1rem 1.2rem; margin-top:.8rem; box-shadow:var(--shadow-2);
+  }
+  .nav-panel .nav-link-x{ display:block; padding:.6rem 0; }
+}
+
+/* =========================================================
+   5. HERO
+   ========================================================= */
+.hero{
+  position:relative; isolation:isolate; overflow:hidden;
+  background:var(--brown); color:var(--cream);
+  /* Top padding clears the fixed navbar. */
+  padding:calc(var(--nav-h) + clamp(48px,8vw,96px)) 0 clamp(80px,10vw,120px);
+}
+.hero h1,.hero h2,.hero h3{ color:var(--cream); }
+
+/* Honeycomb motif — faded out toward the bottom so it never reads as noise */
+.hero-mesh{
+  position:absolute; inset:0; z-index:-2;
+  background-image:var(--hex-honey);
+  background-size:56px 100px;
+  opacity:.15;
+  -webkit-mask-image:radial-gradient(120% 88% at 50% 0%, #000 28%, transparent 76%);
+  mask-image:radial-gradient(120% 88% at 50% 0%, #000 28%, transparent 76%);
+}
+/* Two soft honey glows for warmth and depth */
+.hero-glow{ position:absolute; z-index:-1; border-radius:50%; filter:blur(18px); pointer-events:none; }
+.hero-glow-a{
+  width:min(720px,90vw); aspect-ratio:1; top:-32%; right:-14%;
+  background:radial-gradient(circle,rgba(232,163,23,.34),transparent 62%);
+}
+.hero-glow-b{
+  width:min(520px,80vw); aspect-ratio:1; bottom:-30%; left:-16%;
+  background:radial-gradient(circle,rgba(198,124,11,.30),transparent 64%);
+}
+
+.hero-actions{ display:flex; flex-wrap:wrap; gap:.9rem; margin-top:2.2rem; }
+
+.hero-facts{
+  list-style:none; margin:3rem 0 0; padding:2rem 0 0;
+  border-top:1px solid rgba(253,246,232,.14);
+  display:grid; gap:1.4rem;
+  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+}
+.hero-facts li{ display:flex; align-items:flex-start; gap:.7rem; font-size:.94rem; color:rgba(253,246,232,.80); line-height:1.5; }
+.hero-facts svg{ width:20px; height:20px; color:var(--honey); flex:none; margin-top:2px; }
+
+/* Hexagon-clipped hero photo with an offset hexagon behind it */
+.hero-visual{ position:relative; max-width:460px; margin-inline:auto; }
+.hex-shape{ clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%); }
+.hero-photo{
+  position:relative; aspect-ratio:1/1.08; overflow:hidden;
+  background:var(--honey-deep);
+}
+.hero-photo img{ width:100%; height:100%; object-fit:cover; }
+.hero-photo::after{ /* warm tint to bind the photo to the palette */
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(180deg,transparent 45%,rgba(36,26,14,.35));
+}
+.hero-hex-back{
+  position:absolute; inset:0; transform:translate(22px,26px) scale(1.02);
+  border:2px solid rgba(232,163,23,.42); z-index:-1;
+}
+
+.hero-chip{
+  position:absolute; left:-6px; bottom:9%;
+  display:flex; align-items:center; gap:.75rem;
+  background:var(--cream); color:var(--brown);
+  padding:.85rem 1.15rem; border-radius:var(--r-md);
+  box-shadow:var(--shadow-3);
+  animation:float 5.5s ease-in-out infinite;
+}
+.hero-chip strong{ display:block; font-size:1.02rem; line-height:1.2; }
+.hero-chip span{ font-size:.78rem; color:var(--brown-70); }
+.hero-chip .chip-hex{
+  width:34px; height:38px; flex:none; display:grid; place-items:center;
+  background:var(--honey); color:var(--brown);
+  clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);
+}
+.hero-chip .chip-hex svg{ width:18px; height:18px; }
+@keyframes float{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-9px); } }
+
+@media (max-width:991.98px){
+  .hero-visual{ max-width:340px; margin-top:2.5rem; }
+  .hero-chip{ left:-10px; }
+}
+
+/* =========================================================
+   6. STEPS TIMELINE
+   ========================================================= */
+.steps{
+  list-style:none; margin:0; padding:0; position:relative;
+  display:grid; gap:2.4rem;
+}
+/* Mobile: vertical dashed spine behind the hexagons */
+.steps::before{
+  content:''; position:absolute; left:37px; top:14px; bottom:14px; width:2px;
+  background:repeating-linear-gradient(180deg,var(--honey) 0 7px,transparent 7px 15px);
+  opacity:.5;
+}
+.step{ position:relative; display:grid; grid-template-columns:76px 1fr; gap:1.3rem; align-items:start; }
+.step-hex{
+  position:relative; z-index:1; width:76px; height:84px; flex:none;
+  display:grid; place-items:center;
+  background:linear-gradient(150deg,var(--honey),var(--honey-deep));
+  color:var(--brown);
+  clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);
+  transition:transform .45s var(--ease);
+}
+.step:hover .step-hex{ transform:rotate(-8deg) scale(1.05); }
+.step-hex svg{ width:32px; height:32px; }
+.step-num{
+  display:block; font-size:.82rem; letter-spacing:.14em; color:var(--amber-ink);
+  margin-bottom:.35rem;
+}
+.step h3{ font-size:1.18rem; margin:0 0 .55rem; }
+.step p{ margin:0; font-size:.96rem; }
+
+@media (min-width:992px){
+  .steps{ grid-template-columns:repeat(4,1fr); gap:2rem; }
+  /* Desktop: horizontal dashed line running through the hexagon row */
+  .steps::before{
+    left:12%; right:12%; top:42px; bottom:auto; width:auto; height:2px;
+    background:repeating-linear-gradient(90deg,var(--honey) 0 7px,transparent 7px 15px);
+  }
+  .step{ grid-template-columns:1fr; gap:0; text-align:center; justify-items:center; }
+  .step-hex{ margin-bottom:1.5rem; }
+  .step p{ max-width:30ch; }
+}
+
+/* =========================================================
+   7. BEEKEEPER
+   ========================================================= */
+.about-media{ position:relative; }
+.about-photo{
+  position:relative; z-index:1; overflow:hidden;
+  border-radius:var(--r-lg); aspect-ratio:4/5;
+  box-shadow:var(--shadow-3); background:var(--honey-deep);
+}
+.about-photo img{ width:100%; height:100%; object-fit:cover; }
+/* Honeycomb-patterned block peeking out behind the photo */
+.about-deco{
+  position:absolute; z-index:0; width:58%; aspect-ratio:1;
+  right:-22px; bottom:-26px; border-radius:var(--r-lg);
+  background-image:var(--hex-brown); background-size:56px 100px;
+  opacity:.16;
+}
+
+.stat-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:.9rem; margin-top:2.2rem; }
+.stat-card{
+  background:var(--white); border:1px solid var(--line); border-radius:var(--r-md);
+  padding:1.35rem 1rem; text-align:center;
+  box-shadow:var(--shadow-1);
+  transition:transform .35s var(--ease), box-shadow .35s var(--ease);
+}
+.stat-card:hover{ transform:translateY(-5px); box-shadow:var(--shadow-2); }
+.stat-value{ font-size:clamp(1.7rem,3.4vw,2.3rem); color:var(--brown); line-height:1; display:block; }
+.stat-value sup{ font-size:.5em; color:var(--honey-deep); top:-.7em; }
+.stat-label{ display:block; margin-top:.5rem; font-size:.8rem; line-height:1.35; color:var(--brown-70); }
+
+@media (max-width:575.98px){
+  .stat-grid{ grid-template-columns:1fr; }
+  .stat-card{ display:flex; align-items:center; justify-content:space-between; text-align:left; padding:1rem 1.2rem; }
+  .stat-label{ margin-top:0; max-width:16ch; text-align:right; }
+}
+
+/* =========================================================
+   8. PRODUCTS
+   ========================================================= */
+.product-card{
+  position:relative; height:100%; display:flex; flex-direction:column;
+  background:var(--white); border:1px solid var(--line);
+  border-radius:var(--r-lg); overflow:hidden;
+  box-shadow:var(--shadow-1);
+  transition:transform .4s var(--ease), box-shadow .4s var(--ease), border-color .4s var(--ease);
+}
+.product-card:hover{ transform:translateY(-7px); box-shadow:var(--shadow-3); border-color:transparent; }
+
+.product-media{ position:relative; aspect-ratio:4/3; overflow:hidden; background:var(--cream-2); }
+.product-media img{ width:100%; height:100%; object-fit:cover; transition:transform .7s var(--ease); }
+.product-card:hover .product-media img{ transform:scale(1.07); }
+
+.tag{
+  position:absolute; top:1rem; left:1rem;
+  background:var(--cream); color:var(--brown);
+  font-size:.72rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase;
+  padding:.4rem .75rem; border-radius:999px; box-shadow:var(--shadow-1);
+}
+.weight{
+  position:absolute; right:1rem; bottom:1rem;
+  background:rgba(36,26,14,.78); color:var(--cream);
+  backdrop-filter:blur(6px);
+  font-size:.76rem; font-weight:600;
+  padding:.35rem .7rem; border-radius:999px;
+}
+
+.product-body{ padding:1.5rem 1.5rem 1.6rem; display:flex; flex-direction:column; flex:1; }
+.product-body h3{ font-size:1.22rem; margin:0 0 .5rem; }
+.product-body p{ font-size:.92rem; margin:0 0 1.3rem; flex:1; }
+
+.price-row{ display:flex; align-items:center; justify-content:space-between; gap:1rem; }
+.price{ font-size:1.5rem; color:var(--brown); line-height:1; white-space:nowrap; }
+.price .cur{ font-size:.72em; color:var(--honey-deep); margin-left:.15em; }
+
+.btn-add{
+  border:0; cursor:pointer; flex:none;
+  font-family:inherit; font-weight:700; font-size:.9rem;
+  padding:.8rem 1.15rem; border-radius:999px;
+  background:var(--brown); color:var(--cream);
+  transition:background .3s var(--ease), transform .3s var(--ease), color .3s var(--ease);
+}
+.btn-add:hover{ background:var(--honey-deep); transform:translateY(-2px); }
+.btn-add.is-added{ background:var(--honey); color:var(--brown); }
+
+/* =========================================================
+   9. CART PANEL (Bootstrap offcanvas, restyled)
+   ========================================================= */
+.cart-panel{
+  --bs-offcanvas-width:min(430px,92vw);
+  background:var(--cream); color:var(--brown-70);
+  border-left:0; box-shadow:-30px 0 70px -30px rgba(36,26,14,.5);
+}
+.cart-head{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:1.5rem 1.6rem 1.1rem; border-bottom:1px solid var(--line);
+}
+.cart-head h2{ font-size:1.35rem; margin:0; display:flex; align-items:center; gap:.6rem; }
+.cart-close{
+  width:40px; height:40px; border-radius:50%; border:1px solid var(--line);
+  background:transparent; color:var(--brown); cursor:pointer;
+  display:grid; place-items:center;
+  transition:background .25s var(--ease), color .25s var(--ease), transform .25s var(--ease);
+}
+.cart-close:hover{ background:var(--brown); color:var(--cream); transform:rotate(90deg); }
+.cart-close svg{ width:18px; height:18px; }
+
+.cart-body{ flex:1; overflow-y:auto; padding:1.2rem 1.6rem; }
+
+.cart-item{
+  display:grid; grid-template-columns:72px 1fr auto; gap:1rem;
+  padding:1.1rem 0; border-bottom:1px solid var(--line);
+}
+.cart-item:last-child{ border-bottom:0; }
+.cart-thumb{
+  width:72px; height:72px; border-radius:var(--r-sm); overflow:hidden;
+  background:var(--cream-2); flex:none;
+}
+.cart-thumb img{ width:100%; height:100%; object-fit:cover; }
+.cart-item h3{ font-size:.98rem; margin:0 0 .15rem; }
+.cart-item .meta{ font-size:.8rem; color:var(--brown-70); margin:0 0 .6rem; }
+.cart-item .line-total{ font-weight:700; color:var(--brown); font-size:.95rem; white-space:nowrap; }
+
+.qty{
+  display:inline-flex; align-items:center; gap:.15rem;
+  background:var(--white); border:1px solid var(--line); border-radius:999px; padding:.2rem;
+}
+.qty button{
+  width:28px; height:28px; border:0; border-radius:50%; cursor:pointer;
+  background:transparent; color:var(--brown); font-size:1.05rem; line-height:1;
+  display:grid; place-items:center;
+  transition:background .2s var(--ease), color .2s var(--ease);
+}
+.qty button:hover{ background:var(--honey); color:var(--brown); }
+.qty output{ min-width:26px; text-align:center; font-weight:700; font-size:.9rem; color:var(--brown); }
+
+.cart-remove{
+  border:0; background:transparent; cursor:pointer; padding:.25rem;
+  color:var(--brown-70); opacity:.6; transition:opacity .2s var(--ease), color .2s var(--ease);
+}
+.cart-remove:hover{ opacity:1; color:#A33A16; }
+.cart-remove svg{ width:16px; height:16px; }
+
+.cart-empty{ text-align:center; padding:3.5rem 1rem; }
+.cart-empty .empty-hex{
+  width:84px; height:92px; margin:0 auto 1.4rem; display:grid; place-items:center;
+  background:var(--cream-2); color:var(--honey-deep);
+  clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);
+}
+.cart-empty .empty-hex svg{ width:36px; height:36px; }
+.cart-empty h3{ font-size:1.12rem; margin:0 0 .4rem; }
+.cart-empty p{ font-size:.92rem; margin:0 0 1.5rem; }
+
+.cart-foot{ padding:1.3rem 1.6rem 1.6rem; border-top:1px solid var(--line); background:var(--cream-2); }
+.cart-total{ display:flex; align-items:baseline; justify-content:space-between; margin-bottom:1.1rem; }
+.cart-total .lbl{ font-weight:600; color:var(--brown); }
+.cart-total .val{ font-size:1.65rem; color:var(--brown); line-height:1; }
+.cart-note{ font-size:.78rem; text-align:center; margin:.85rem 0 0; }
+
+/* Toast */
+.toast-x{
+  background:var(--brown); color:var(--cream);
+  border-radius:var(--r-md); border:0; box-shadow:var(--shadow-3);
+  display:flex; align-items:center; gap:.9rem; padding:1rem 1.2rem;
+  max-width:min(420px,92vw);
+}
+.toast-x .t-hex{
+  width:36px; height:40px; flex:none; display:grid; place-items:center;
+  background:var(--honey); color:var(--brown);
+  clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);
+}
+.toast-x .t-hex svg{ width:20px; height:20px; }
+.toast-x strong{ display:block; font-size:.98rem; line-height:1.3; }
+.toast-x span{ font-size:.85rem; color:rgba(253,246,232,.72); }
+
+/* =========================================================
+   10. FOOTER
+   ========================================================= */
+.site-footer{
+  position:relative; isolation:isolate; overflow:hidden;
+  background:var(--brown); color:rgba(253,246,232,.72);
+  padding:clamp(64px,8vw,92px) 0 0;
+}
+.site-footer::before{
+  content:''; position:absolute; inset:0; z-index:-1;
+  background-image:var(--hex-honey); background-size:56px 100px; opacity:.09;
+  -webkit-mask-image:radial-gradient(90% 70% at 80% 0%, #000, transparent 72%);
+  mask-image:radial-gradient(90% 70% at 80% 0%, #000, transparent 72%);
+}
+.site-footer h3{ color:var(--cream); font-size:1rem; margin:0 0 1.1rem; letter-spacing:.02em; }
+.site-footer a{ color:rgba(253,246,232,.72); }
+.site-footer a:hover{ color:var(--honey); }
+.site-footer .brand-name{ color:var(--cream); }
+.foot-list{ list-style:none; margin:0; padding:0; display:grid; gap:.7rem; font-size:.94rem; }
+.foot-list.with-icons li{ display:flex; gap:.7rem; align-items:flex-start; }
+.foot-list.with-icons svg{ width:18px; height:18px; color:var(--honey); flex:none; margin-top:4px; }
+
+.social{ display:flex; gap:.65rem; margin-top:.3rem; }
+.social a{
+  width:44px; height:44px; border-radius:50%;
+  display:grid; place-items:center;
+  background:rgba(253,246,232,.07); color:var(--cream);
+  transition:background .3s var(--ease), color .3s var(--ease), transform .3s var(--ease);
+}
+.social a:hover{ background:var(--honey); color:var(--brown); transform:translateY(-3px); }
+.social svg{ width:19px; height:19px; }
+
+.foot-bottom{
+  margin-top:clamp(40px,6vw,64px);
+  border-top:1px solid rgba(253,246,232,.12);
+  padding:1.5rem 0;
+  display:flex; flex-wrap:wrap; gap:.6rem 1.5rem;
+  align-items:center; justify-content:space-between;
+  font-size:.85rem;
+}
+</style>
+</head>
+
+<body>
+<a class="skip-link" href="#main">Անցնել հիմնական բովանդակությանը</a>
+
+<!-- =========================================================
+     HEADER / NAVBAR
+     ========================================================= -->
+<header>
+  <nav class="navbar navbar-expand-lg site-nav fixed-top" id="siteNav" aria-label="Հիմնական նավիգացիա">
+    <div class="container">
+
+      <a class="brand" href="#hero" aria-label="Մեղրի Տուն — գլխավոր էջ">
+        <!-- Logo: honeycomb cell with a bee inside -->
+        <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+          <path d="M16 1.5 28.6 8.75v14.5L16 30.5 3.4 23.25V8.75z" fill="currentColor"/>
+          <ellipse cx="16" cy="19" rx="4.6" ry="6" fill="#241A0E"/>
+          <g stroke="#E8A317" stroke-width="1.2" stroke-linecap="round">
+            <path d="M11.9 17.4h8.2M11.6 20.4h8.8"/>
+          </g>
+          <g fill="#FDF6E8" opacity=".92">
+            <ellipse cx="10.6" cy="12.6" rx="3.4" ry="2.1" transform="rotate(-28 10.6 12.6)"/>
+            <ellipse cx="21.4" cy="12.6" rx="3.4" ry="2.1" transform="rotate(28 21.4 12.6)"/>
+          </g>
+        </svg>
+        <span class="brand-name">Մեղրի Տուն</span>
+      </a>
+
+      <div class="d-flex align-items-center gap-2 order-lg-3">
+        <!-- Cart trigger: badge reflects total item count -->
+        <button class="cart-btn" type="button" id="cartBtn"
+                data-bs-toggle="offcanvas" data-bs-target="#cartPanel" aria-controls="cartPanel"
+                aria-label="Բացել զամբյուղը">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <path d="M3 4h2.2l2 12.2a2 2 0 0 0 2 1.7h8.3a2 2 0 0 0 2-1.6L21 8H6.2"/>
+            <circle cx="10" cy="21" r="1.2"/><circle cx="18" cy="21" r="1.2"/>
+          </svg>
+          <span class="cart-badge num" id="cartBadge" aria-hidden="true" hidden>0</span>
+        </button>
+
+        <button class="navbar-toggler d-lg-none" type="button"
+                data-bs-toggle="collapse" data-bs-target="#navMenu"
+                aria-controls="navMenu" aria-expanded="false" aria-label="Բացել մենյուն">
+          <span class="burger" aria-hidden="true"><span></span><span></span><span></span></span>
+        </button>
+      </div>
+
+      <div class="collapse navbar-collapse order-lg-2" id="navMenu">
+        <ul class="navbar-nav ms-auto me-lg-4 align-items-lg-center gap-lg-4 nav-panel">
+          <li class="nav-item"><a class="nav-link-x" href="#how">Ինչպես</a></li>
+          <li class="nav-item"><a class="nav-link-x" href="#beekeeper">Մեղվաբույծը</a></li>
+          <li class="nav-item"><a class="nav-link-x" href="#products">Մեր մեղրը</a></li>
+          <li class="nav-item"><a class="nav-link-x" href="#contact">Կապ</a></li>
+        </ul>
+      </div>
+
+    </div>
+  </nav>
+</header>
+
+<main id="main">
+
+  <!-- =========================================================
+       1. HERO
+       ========================================================= -->
+  <section class="hero" id="hero">
+    <span class="hero-mesh" aria-hidden="true"></span>
+    <span class="hero-glow hero-glow-a" aria-hidden="true"></span>
+    <span class="hero-glow hero-glow-b" aria-hidden="true"></span>
+
+    <div class="container">
+      <div class="row align-items-center g-5">
+
+        <div class="col-lg-6">
+          <p class="eyebrow eyebrow-light reveal">Հայկական լեռների բնական մեղր</p>
+          <h1 class="h-hero reveal" style="--d:.08s">
+            Ոսկե կաթիլներ՝ ուղիղ <span class="accent">փեթակից</span>
+          </h1>
+          <p class="lead-txt lead-light mt-4 reveal" style="--d:.16s">
+            Հավաքում ենք բարձրլեռնային մարգագետինների մեղրը՝ առանց ջերմամշակման,
+            առանց շաքարի և առանց որևէ հավելումի։ Այնպես, ինչպես մեղուներն են պատրաստել այն։
+          </p>
+
+          <div class="hero-actions reveal" style="--d:.24s">
+            <a class="btn-honey" href="#products">
+              Պատվիրել
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor"
+                   stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M5 12h14M13 6l6 6-6 6"/>
+              </svg>
+            </a>
+            <a class="btn-outline-cream" href="#how">Իմանալ ավելին</a>
+          </div>
+
+          <ul class="hero-facts reveal" style="--d:.32s">
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                   stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 2.6 20 7v9.9L12 21.4 4 16.9V7z"/><path d="M8.6 12.1 11 14.5l4.6-4.6"/>
+              </svg>
+              <span>100% բնական, առանց հավելումների</span>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                   stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.2 2"/>
+              </svg>
+              <span>25 տարվա ընտանեկան փորձ</span>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                   stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M3 7h11v8H3zM14 10h3.6l3.4 3v2h-7z"/><circle cx="7" cy="18" r="1.6"/><circle cx="17.5" cy="18" r="1.6"/>
+              </svg>
+              <span>Անվճար առաքում Երևանում</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="col-lg-6">
+          <div class="hero-visual reveal" style="--d:.2s">
+            <span class="hero-hex-back hex-shape" aria-hidden="true"></span>
+            <div class="hero-photo hex-shape">
+              <img src="https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=900&q=80"
+                   alt="Ապակե բանկա բնական մեղրով և փայտե մեղրաշերեփ" width="900" height="972"
+                   fetchpriority="high" decoding="async">
+            </div>
+            <div class="hero-chip">
+              <span class="chip-hex" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                     stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4.5 12.5 10 18 19.5 7"/>
+                </svg>
+              </span>
+              <span>
+                <strong>Բերքահավաք 2026</strong>
+                <span>Հում և չֆիլտրված</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       2. HOW BEES MAKE HONEY — 4-step timeline
+       ========================================================= -->
+  <section class="section" id="how" aria-labelledby="how-title">
+    <div class="container">
+
+      <div class="row align-items-end g-4 mb-5 pb-lg-3">
+        <div class="col-lg-7">
+          <p class="eyebrow reveal">Փեթակի ներսում</p>
+          <h2 class="h-section reveal" id="how-title" style="--d:.06s">
+            Ինչպես են մեղուները մեղր հավաքում
+          </h2>
+        </div>
+        <div class="col-lg-5">
+          <p class="lead-txt reveal m-0" style="--d:.12s">
+            Մեկ բանկա մեղրի հետևում կանգնած է միլիոնավոր ծաղիկ և հազարավոր թևերի աշխատանք։
+            Ահա այդ ճանապարհի չորս փուլերը։
+          </p>
+        </div>
+      </div>
+
+      <ol class="steps">
+        <li class="step reveal">
+          <span class="step-hex" aria-hidden="true">
+            <!-- Flower -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
+                 stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="4.4" r="2"/><circle cx="15.7" cy="6.7" r="2"/>
+              <circle cx="15.7" cy="10.9" r="2"/><circle cx="8.3" cy="10.9" r="2"/>
+              <circle cx="8.3" cy="6.7" r="2"/><circle cx="12" cy="8.8" r="1.7"/>
+              <path d="M12 10.8V20"/><path d="M12 16.2c-2.3 0-3.8-1.3-4.2-2.8 1.9-.7 3.6.2 4.2 2.8z"/>
+            </svg>
+          </span>
+          <div>
+            <span class="step-num num">01</span>
+            <h3>Նեկտարի հավաքում</h3>
+            <p>Բանվոր մեղուն մեկ օրում այցելում է մինչև 2000 ծաղիկ և իր խողովակաձև լեզվով
+               հավաքում նեկտարը՝ պահելով այն հատուկ «մեղրի ստամոքսում»։</p>
+          </div>
+        </li>
+
+        <li class="step reveal" style="--d:.1s">
+          <span class="step-hex" aria-hidden="true">
+            <!-- Hive with an approaching bee -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
+                 stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 20h12"/><path d="M7.4 20V10a4.6 4.6 0 0 1 9.2 0v10"/>
+              <path d="M7.6 13.2h8.8M7.4 16.6h9.2"/><circle cx="12" cy="18.4" r="1"/>
+              <circle cx="20.4" cy="6.6" r="1.2"/>
+              <path d="M19.6 7.8c-1.2 1.6-2.6 2.5-4.6 2.9" stroke-dasharray="2 2.2"/>
+            </svg>
+          </span>
+          <div>
+            <span class="step-num num">02</span>
+            <h3>Փոխանցում փեթակ</h3>
+            <p>Փեթակում նեկտարը բերնեբերան փոխանցվում է ընդունող մեղուներին, որոնք այն
+               հարստացնում են ֆերմենտներով և բաշխում մոմե խուցերի մեջ։</p>
+          </div>
+        </li>
+
+        <li class="step reveal" style="--d:.2s">
+          <span class="step-hex" aria-hidden="true">
+            <!-- Droplet + air currents -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
+                 stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 3.6c3 4 5 6.4 5 9a5 5 0 0 1-10 0c0-2.6 2-5 5-9z"/>
+              <path d="M2.6 8.4h3.2M2.2 12h2.6M18.2 8.4h3.2M19.2 12h2.6"/>
+            </svg>
+          </span>
+          <div>
+            <span class="step-num num">03</span>
+            <h3>Ֆերմենտացում և խտացում</h3>
+            <p>Մեղուները թևերով օդափոխում են խուցերը՝ գոլորշիացնելով ավելորդ ջուրը, մինչև
+               խոնավությունն իջնի 18%-ից ցածր։ Հենց այդ պահին նեկտարը դառնում է մեղր։</p>
+          </div>
+        </li>
+
+        <li class="step reveal" style="--d:.3s">
+          <span class="step-hex" aria-hidden="true">
+            <!-- Sealed hexagon cell -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
+                 stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2.6 20 7v9.9L12 21.4 4 16.9V7z"/><path d="M8.4 12.2 10.9 14.7l4.7-4.9"/>
+            </svg>
+          </span>
+          <div>
+            <span class="step-num num">04</span>
+            <h3>Խուցերի կնքում մոմով</h3>
+            <p>Հասունացած մեղրը կնքվում է մաքուր մոմե կափարիչով, որը պահպանում է բույրն ու
+               օգտակար հատկությունները ամիսներ շարունակ։</p>
+          </div>
+        </li>
+      </ol>
+
+    </div>
+  </section>
+
+  <!-- =========================================================
+       3. THE BEEKEEPER
+       ========================================================= -->
+  <section class="section section-alt" id="beekeeper" aria-labelledby="bk-title">
+    <div class="container">
+      <div class="row align-items-center g-5 g-lg-6">
+
+        <div class="col-lg-5">
+          <div class="about-media reveal">
+            <span class="about-deco" aria-hidden="true"></span>
+            <div class="about-photo">
+              <img src="https://images.unsplash.com/photo-1560717845-968823efbee1?auto=format&fit=crop&w=800&q=80"
+                   alt="Մեղվաբույծը պաշտպանիչ հագուստով զննում է փեթակի շրջանակը"
+                   width="800" height="1000" loading="lazy" decoding="async">
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-7 ps-lg-5">
+          <p class="eyebrow reveal">Մարդը փեթակի կողքին</p>
+          <h2 class="h-section reveal" id="bk-title" style="--d:.06s">Ո՞վ է մեղվաբույծը</h2>
+
+          <p class="lead-txt mt-4 reveal" style="--d:.12s">
+            Մեղվաբուծությունը մասնագիտություն չէ միայն, դա օրացույց է․ գարնանը՝ փեթակների
+            արթնացում, ամռանը՝ քոչ դեպի լեռնային մարգագետիններ, աշնանը՝ բերքահավաք և ձմռան
+            նախապատրաստում։
+          </p>
+          <p class="reveal" style="--d:.18s">
+            Արամը երրորդ սերնդի մեղվաբույծ է․ նրա պապը փեթակներ էր պահում նույն լանջին։
+            Մեղվաբույծը «չի արտադրում» մեղրը — նա ստեղծում է պայմաններ, որպեսզի մեղվաընտանիքն
+            առողջ լինի, և վերցնում է միայն այն ավելցուկը, որն ընտանիքին անհրաժեշտ չէ ձմեռելու համար։
+          </p>
+
+          <div class="stat-grid reveal" style="--d:.24s">
+            <div class="stat-card">
+              <span class="stat-value num">120<sup>+</sup></span>
+              <span class="stat-label">Փեթակների քանակ</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-value num">25</span>
+              <span class="stat-label">Տարիների փորձ</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-value num">4.5<sup>տ</sup></span>
+              <span class="stat-label">Տարեկան բերք</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       4. PRODUCTS — grid is rendered from the PRODUCTS array in JS
+       ========================================================= -->
+  <section class="section" id="products" aria-labelledby="pr-title">
+    <div class="container">
+
+      <div class="row align-items-end g-4 mb-5">
+        <div class="col-lg-7">
+          <p class="eyebrow reveal">Բերքահավաք 2026</p>
+          <h2 class="h-section reveal" id="pr-title" style="--d:.06s">Մեր մեղրը</h2>
+        </div>
+        <div class="col-lg-5">
+          <p class="lead-txt reveal m-0" style="--d:.12s">
+            Վեց տեսակ՝ վեց տարբեր բնապատկեր։ Յուրաքանչյուր բանկա լցվում է ձեռքով,
+            բերքահավաքից հետո առաջին շաբաթվա ընթացքում։
+          </p>
+        </div>
+      </div>
+
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4" id="productGrid"></div>
+
+    </div>
+  </section>
+
+</main>
+
+<!-- =========================================================
+     FOOTER
+     ========================================================= -->
+<footer class="site-footer" id="contact">
+  <div class="container">
+    <div class="row g-5">
+
+      <div class="col-lg-4">
+        <a class="brand mb-3" href="#hero" aria-label="Մեղրի Տուն — գլխավոր էջ">
+          <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+            <path d="M16 1.5 28.6 8.75v14.5L16 30.5 3.4 23.25V8.75z" fill="currentColor"/>
+            <ellipse cx="16" cy="19" rx="4.6" ry="6" fill="#241A0E"/>
+            <g stroke="#E8A317" stroke-width="1.2" stroke-linecap="round">
+              <path d="M11.9 17.4h8.2M11.6 20.4h8.8"/>
+            </g>
+            <g fill="#FDF6E8" opacity=".92">
+              <ellipse cx="10.6" cy="12.6" rx="3.4" ry="2.1" transform="rotate(-28 10.6 12.6)"/>
+              <ellipse cx="21.4" cy="12.6" rx="3.4" ry="2.1" transform="rotate(28 21.4 12.6)"/>
+            </g>
+          </svg>
+          <span class="brand-name">Մեղրի Տուն</span>
+        </a>
+        <p style="max-width:38ch">
+          Ընտանեկան մեղվանոց Լոռու լեռներում։ Հում, չֆիլտրված մեղր՝ ուղիղ փեթակից ձեր սեղանին։
+        </p>
+        <div class="social" role="list" aria-label="Սոցիալական ցանցեր">
+          <a href="#" role="listitem" aria-label="Facebook">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M13.6 21v-7.5h2.5l.4-2.93h-2.9V8.72c0-.85.24-1.43 1.45-1.43h1.55V4.67c-.27-.04-1.2-.12-2.28-.12-2.26 0-3.8 1.38-3.8 3.91v2.11H8v2.93h2.52V21h3.08z"/>
+            </svg>
+          </a>
+          <a href="#" role="listitem" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+              <rect x="3.4" y="3.4" width="17.2" height="17.2" rx="5.2"/>
+              <circle cx="12" cy="12" r="4.1"/>
+              <circle cx="16.9" cy="7.1" r="1.05" fill="currentColor" stroke="none"/>
+            </svg>
+          </a>
+          <a href="#" role="listitem" aria-label="Telegram">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M21.6 4.3 2.9 11.5c-1 .38-1 .96.08 1.28l4.7 1.47 1.8 5.5c.2.56.36.78.7.78.34 0 .49-.15.68-.34l2.24-2.18 4.66 3.44c.86.48 1.47.23 1.68-.79l3.04-14.3c.31-1.25-.48-1.82-1.88-1.06zM8.9 13.9l10.1-6.37c.44-.27.85-.12.52.18l-8.65 7.8-.34 3.6-1.63-5.21z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="col-6 col-lg-2">
+        <h3>Բաժիններ</h3>
+        <ul class="foot-list">
+          <li><a href="#how">Ինչպես</a></li>
+          <li><a href="#beekeeper">Մեղվաբույծը</a></li>
+          <li><a href="#products">Մեր մեղրը</a></li>
+        </ul>
+      </div>
+
+      <div class="col-6 col-lg-3">
+        <h3>Կապ</h3>
+        <ul class="foot-list with-icons">
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/>
+            </svg>
+            <a href="tel:+37455102030">+374 55 10 20 30</a>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="2.5" y="4.5" width="19" height="15" rx="2.5"/><path d="m3 7 9 6 9-6"/>
+            </svg>
+            <a href="mailto:info@meghritun.am">info@meghritun.am</a>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.2 2"/>
+            </svg>
+            <span>Երկ–Շաբ, 09:00–19:00</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="col-lg-3">
+        <h3>Հասցե</h3>
+        <ul class="foot-list with-icons">
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M20 10.5c0 5.4-8 12-8 12s-8-6.6-8-12a8 8 0 1 1 16 0z"/><circle cx="12" cy="10.3" r="2.8"/>
+            </svg>
+            <address class="m-0" style="font-style:normal">
+              Մեղվանոց՝ ՀՀ, Լոռու մարզ,<br>գյուղ Լերմոնտովո 12<br>
+              <span style="opacity:.75">Խանութ՝ Երևան, Մաշտոցի 45</span>
+            </address>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="foot-bottom">
+      <p class="m-0">© <span id="year">2026</span> Մեղրի Տուն։ Բոլոր իրավունքները պաշտպանված են։</p>
+      <p class="m-0">Պատրաստված է սիրով և մեղրով 🍯</p>
+    </div>
+  </div>
+</footer>
+
+<!-- =========================================================
+     CART PANEL (off-canvas, slides in from the right)
+     ========================================================= -->
+<aside class="offcanvas offcanvas-end cart-panel" tabindex="-1" id="cartPanel" aria-labelledby="cartTitle">
+  <div class="cart-head">
+    <h2 id="cartTitle">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M3 4h2.2l2 12.2a2 2 0 0 0 2 1.7h8.3a2 2 0 0 0 2-1.6L21 8H6.2"/>
+        <circle cx="10" cy="21" r="1.2"/><circle cx="18" cy="21" r="1.2"/>
+      </svg>
+      Զամբյուղ
+    </h2>
+    <button class="cart-close" type="button" data-bs-dismiss="offcanvas" aria-label="Փակել զամբյուղը">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+    </button>
+  </div>
+
+  <div class="cart-body" id="cartBody"><!-- rendered by JS --></div>
+
+  <div class="cart-foot" id="cartFoot" hidden>
+    <div class="cart-total">
+      <span class="lbl">Ընդհանուր</span>
+      <span class="val num" id="cartTotal">0 ֏</span>
+    </div>
+    <button class="btn-honey w-100" type="button" id="checkoutBtn">Պատվիրել</button>
+    <p class="cart-note">Առաքումն անվճար է Երևանում՝ 10 000 ֏-ից բարձր պատվերների դեպքում։</p>
+  </div>
+</aside>
+
+<!-- Screen-reader announcements for cart changes -->
+<span class="visually-hidden" id="cartLive" aria-live="polite" aria-atomic="true"></span>
+
+<!-- Success toast -->
+<div class="toast-container position-fixed bottom-0 start-50 translate-middle-x p-3" style="z-index:1200">
+  <div class="toast toast-x" id="orderToast" role="status" aria-live="polite" aria-atomic="true"
+       data-bs-delay="4200">
+    <span class="t-hex" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+           stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 12.5 10 18 19.5 7"/></svg>
+    </span>
+    <span>
+      <strong>Պատվերն ընդունված է</strong>
+      <span>Շնորհակալություն։ Մենք կզանգահարենք ձեզ 15 րոպեի ընթացքում։</span>
+    </span>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  /* =========================================================
+     PRODUCT DATA — single source of truth for the grid and the cart
+     ========================================================= */
+  var PRODUCTS = [
+    {
+      id: 'floral',
+      name: 'Ծաղկային մեղր',
+      weight: '500 գ',
+      price: 3500,
+      tag: 'Հիթ',
+      desc: 'Բազմածաղիկ մարգագետինների մեղր՝ մեղմ բույրով և հավասարակշռված քաղցրությամբ։',
+      img: 'https://images.unsplash.com/photo-1550583724-b2692b85b150?auto=format&fit=crop&w=800&q=80',
+      alt: 'Ծաղկային մեղրի բանկա փայտե սեղանին'
+    },
+    {
+      id: 'acacia',
+      name: 'Ակացիայի մեղր',
+      weight: '500 գ',
+      price: 5200,
+      tag: '',
+      desc: 'Բաց, գրեթե թափանցիկ։ Երկար չի բյուրեղանում, ունի նուրբ վանիլային երանգ։',
+      img: 'https://images.unsplash.com/photo-1471943311424-646960669fbc?auto=format&fit=crop&w=800&q=80',
+      alt: 'Բաց գույնի ակացիայի մեղր ապակե անոթում'
+    },
+    {
+      id: 'buckwheat',
+      name: 'Հնդկաձավարի մեղր',
+      weight: '700 գ',
+      price: 6400,
+      tag: '',
+      desc: 'Մուգ և հագեցած՝ կարամելի նոտաներով, երկաթի բարձր պարունակությամբ։',
+      img: 'https://images.unsplash.com/photo-1600275669439-14e40452d20b?auto=format&fit=crop&w=800&q=80',
+      alt: 'Մուգ հնդկաձավարի մեղր գդալի վրա'
+    },
+    {
+      id: 'mountain',
+      name: 'Լեռնային մեղր',
+      weight: '500 գ',
+      price: 7000,
+      tag: 'Սահմանափակ',
+      desc: 'Հավաքված 2000 մ բարձրության վրա՝ խեժի և լեռնային խոտաբույսերի բույրով։',
+      img: 'https://images.unsplash.com/photo-1558642452-9d2a7deb7f62?auto=format&fit=crop&w=800&q=80',
+      alt: 'Լեռնային մեղրի բանկա բնության ֆոնին'
+    },
+    {
+      id: 'maple',
+      name: 'Թխկու մեղր',
+      weight: '350 գ',
+      price: 4800,
+      tag: 'Նոր',
+      desc: 'Ոսկեգույն, կրեմային կառուցվածքով՝ թեթև թխկու քաղցրությամբ։',
+      img: 'https://images.unsplash.com/photo-1587049633312-d628ae50a8ae?auto=format&fit=crop&w=800&q=80',
+      alt: 'Կրեմային թխկու մեղր փոքր բանկայում'
+    },
+    {
+      id: 'comb',
+      name: 'Մոր մեղրախիս',
+      weight: '900 գ',
+      price: 9000,
+      tag: '',
+      desc: 'Մոմե խուցերով բնական մեղրախիս՝ ուղիղ շրջանակից կտրված, ձեռք չտրված։',
+      img: 'https://images.unsplash.com/photo-1568526381923-caf3fd520382?auto=format&fit=crop&w=800&q=80',
+      alt: 'Բնական մեղրախիս մոմե վեցանկյուն խուցերով'
+    }
+  ];
+
+  var STORAGE_KEY = 'meghri-tun-cart-v1';
+
+  /* =========================================================
+     HELPERS
+     ========================================================= */
+  var $  = function (sel, ctx) { return (ctx || document).querySelector(sel); };
+
+  /* Escape any string before it goes into innerHTML. */
+  function esc(str) {
+    return String(str).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+
+  /* 7000 -> "7 000 ֏" using a narrow no-break space so prices never wrap. */
+  function fmt(n) {
+    return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + ' ֏';
+  }
+
+  function findProduct(id) {
+    for (var i = 0; i < PRODUCTS.length; i++) {
+      if (PRODUCTS[i].id === id) return PRODUCTS[i];
+    }
+    return null;
+  }
+
+  /* =========================================================
+     PRODUCT GRID
+     ========================================================= */
+  function renderProducts() {
+    var grid = $('#productGrid');
+    if (!grid) return;
+
+    grid.innerHTML = PRODUCTS.map(function (p, i) {
+      // Stagger the reveal across the grid, capped so late cards don't lag.
+      var delay = Math.min(i, 2) * 0.1;
+      return '' +
+        '<div class="col">' +
+          '<article class="product-card reveal" style="--d:' + delay + 's">' +
+            '<div class="product-media">' +
+              '<img src="' + esc(p.img) + '" alt="' + esc(p.alt) + '" width="800" height="600" loading="lazy" decoding="async">' +
+              (p.tag ? '<span class="tag">' + esc(p.tag) + '</span>' : '') +
+              '<span class="weight">' + esc(p.weight) + '</span>' +
+            '</div>' +
+            '<div class="product-body">' +
+              '<h3>' + esc(p.name) + '</h3>' +
+              '<p>' + esc(p.desc) + '</p>' +
+              '<div class="price-row">' +
+                '<span class="price num">' + fmt(p.price) + '</span>' +
+                '<button class="btn-add" type="button" data-add="' + esc(p.id) + '" ' +
+                        'aria-label="Ավելացնել զամբյուղ՝ ' + esc(p.name) + '">Ավելացնել զամբյուղ</button>' +
+              '</div>' +
+            '</div>' +
+          '</article>' +
+        '</div>';
+    }).join('');
+  }
+
+  /* =========================================================
+     CART STATE — array of { id, qty }, persisted in localStorage
+     ========================================================= */
+  var cart = loadCart();
+
+  function loadCart() {
+    try {
+      var raw = JSON.parse(localStorage.getItem(STORAGE_KEY));
+      if (!Array.isArray(raw)) return [];
+      // Drop anything that no longer matches a real product.
+      return raw
+        .filter(function (it) { return it && findProduct(it.id) && it.qty > 0; })
+        .map(function (it) { return { id: it.id, qty: Math.min(99, Math.floor(it.qty)) }; });
+    } catch (e) {
+      return [];
+    }
+  }
+
+  function saveCart() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(cart));
+    } catch (e) {
+      /* Private mode / quota exceeded — the cart still works for this session. */
+    }
+  }
+
+  function cartCount() {
+    return cart.reduce(function (sum, it) { return sum + it.qty; }, 0);
+  }
+
+  function cartTotal() {
+    return cart.reduce(function (sum, it) {
+      var p = findProduct(it.id);
+      return sum + (p ? p.price * it.qty : 0);
+    }, 0);
+  }
+
+  function addToCart(id) {
+    var line = null;
+    for (var i = 0; i < cart.length; i++) { if (cart[i].id === id) { line = cart[i]; break; } }
+    if (line) { line.qty = Math.min(99, line.qty + 1); }
+    else { cart.push({ id: id, qty: 1 }); }
+    commit();
+  }
+
+  function changeQty(id, delta) {
+    var idx = -1;
+    for (var i = 0; i < cart.length; i++) { if (cart[i].id === id) { idx = i; break; } }
+    if (idx === -1) return;
+
+    var next = cart[idx].qty + delta;
+
+    // Dropping below 1 removes the line, which changes the list structure.
+    if (next < 1) { cart.splice(idx, 1); commit(); return; }
+
+    // Otherwise patch the existing row instead of rebuilding the list, so the
+    // +/- button the user is clicking survives and keeps keyboard focus.
+    cart[idx].qty = Math.min(99, next);
+    commit(id);
+  }
+
+  function removeFromCart(id) {
+    cart = cart.filter(function (it) { return it.id !== id; });
+    commit();
+  }
+
+  /* Persist + repaint. Pass an id to patch just that row; omit to rebuild. */
+  function commit(patchId) {
+    saveCart();
+    renderBadge();
+    if (patchId && patchCartRow(patchId)) return;
+    renderCart();
+  }
+
+  /* Update one row's quantity and totals in place.
+     Returns false if the row isn't on screen, so the caller can fall back. */
+  function patchCartRow(id) {
+    var row = document.querySelector('[data-row="' + id + '"]');
+    var line = null;
+    for (var i = 0; i < cart.length; i++) { if (cart[i].id === id) { line = cart[i]; break; } }
+    if (!row || !line) return false;
+
+    var product = findProduct(id);
+    row.querySelector('output').textContent = line.qty;
+    row.querySelector('.line-total').textContent = fmt(product.price * line.qty);
+    $('#cartTotal').textContent = fmt(cartTotal());
+    return true;
+  }
+
+  /* =========================================================
+     CART RENDERING
+     ========================================================= */
+  function renderBadge() {
+    var count = cartCount();
+    var badge = $('#cartBadge');
+    var btn   = $('#cartBtn');
+    var live  = $('#cartLive');
+
+    badge.textContent = count;
+    badge.hidden = count === 0;
+    btn.setAttribute('aria-label', count === 0
+      ? 'Բացել զամբյուղը, զամբյուղը դատարկ է'
+      : 'Բացել զամբյուղը, ' + count + ' ապրանք');
+    live.textContent = count === 0
+      ? 'Զամբյուղը դատարկ է'
+      : 'Զամբյուղում ' + count + ' ապրանք է, ընդհանուր ' + cartTotal() + ' դրամ';
+  }
+
+  function renderCart() {
+    var body = $('#cartBody');
+    var foot = $('#cartFoot');
+
+    // A full rebuild destroys whatever the user was focused on inside the list.
+    // Remember that, so keyboard users aren't dropped back to <body>.
+    var hadFocusInside = body.contains(document.activeElement);
+
+    if (cart.length === 0) {
+      foot.hidden = true;
+      body.innerHTML = '' +
+        '<div class="cart-empty">' +
+          '<span class="empty-hex" aria-hidden="true">' +
+            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" ' +
+                 'stroke-linecap="round" stroke-linejoin="round">' +
+              '<path d="M12 2.6 20 7v9.9L12 21.4 4 16.9V7z"></path><path d="M12 11v5"></path>' +
+              '<circle cx="12" cy="8.4" r=".9" fill="currentColor" stroke="none"></circle>' +
+            '</svg>' +
+          '</span>' +
+          '<h3>Զամբյուղը դատարկ է</h3>' +
+          '<p>Դեռ ոչ մի բանկա չեք ընտրել։<br>Սկսենք համտեսից՝ ընտրեք ձեր մեղրը։</p>' +
+          '<button class="btn-honey" type="button" data-goto-products>Դեպի մեղրերը</button>' +
+        '</div>';
+      if (hadFocusInside) body.querySelector('[data-goto-products]').focus();
+      return;
+    }
+
+    foot.hidden = false;
+    body.innerHTML = cart.map(function (it) {
+      var p = findProduct(it.id);
+      if (!p) return '';
+      return '' +
+        '<div class="cart-item" data-row="' + esc(p.id) + '">' +
+          '<div class="cart-thumb"><img src="' + esc(p.img) + '" alt="" width="72" height="72" loading="lazy"></div>' +
+          '<div>' +
+            '<h3>' + esc(p.name) + '</h3>' +
+            '<p class="meta">' + esc(p.weight) + ' · ' + fmt(p.price) + '</p>' +
+            '<div class="qty">' +
+              '<button type="button" data-dec="' + esc(p.id) + '" aria-label="Պակասեցնել՝ ' + esc(p.name) + '">−</button>' +
+              '<output aria-label="Քանակ">' + it.qty + '</output>' +
+              '<button type="button" data-inc="' + esc(p.id) + '" aria-label="Ավելացնել՝ ' + esc(p.name) + '">+</button>' +
+            '</div>' +
+          '</div>' +
+          '<div class="d-flex flex-column align-items-end justify-content-between">' +
+            '<button class="cart-remove" type="button" data-del="' + esc(p.id) + '" aria-label="Հեռացնել՝ ' + esc(p.name) + '">' +
+              '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">' +
+                '<path d="M6 6l12 12M18 6 6 18"></path></svg>' +
+            '</button>' +
+            '<span class="line-total num">' + fmt(p.price * it.qty) + '</span>' +
+          '</div>' +
+        '</div>';
+    }).join('');
+
+    $('#cartTotal').textContent = fmt(cartTotal());
+
+    // Focus was inside a row that no longer exists — land on the first
+    // remove button rather than losing the user's place in the panel.
+    if (hadFocusInside) {
+      var next = body.querySelector('.cart-remove');
+      if (next) next.focus();
+    }
+  }
+
+  /* =========================================================
+     EVENTS
+     ========================================================= */
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest('button');
+    if (!btn) return;
+
+    // Add to cart (product grid)
+    var addId = btn.getAttribute('data-add');
+    if (addId) {
+      addToCart(addId);
+      bumpCart();
+      flashAdded(btn);
+      return;
+    }
+
+    // Quantity + removal (cart panel)
+    var inc = btn.getAttribute('data-inc');
+    if (inc) { changeQty(inc, 1); return; }
+
+    var dec = btn.getAttribute('data-dec');
+    if (dec) { changeQty(dec, -1); return; }
+
+    var del = btn.getAttribute('data-del');
+    if (del) { removeFromCart(del); return; }
+
+    // Empty-state shortcut: close the panel, then scroll to the grid
+    if (btn.hasAttribute('data-goto-products')) {
+      var oc = bootstrap.Offcanvas.getInstance($('#cartPanel'));
+      if (oc) oc.hide();
+      $('#products').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      return;
+    }
+  });
+
+  /* Nudge the navbar cart so the change is noticeable without opening the panel. */
+  function bumpCart() {
+    var btn = $('#cartBtn');
+    btn.classList.remove('bump');
+    void btn.offsetWidth;               // force reflow so the animation can restart
+    btn.classList.add('bump');
+  }
+
+  /* Momentary confirmation on the product button itself. */
+  function flashAdded(btn) {
+    if (btn.dataset.busy) return;
+    var original = btn.textContent;
+    btn.dataset.busy = '1';
+    btn.textContent = 'Ավելացվեց ✓';
+    btn.classList.add('is-added');
+    setTimeout(function () {
+      btn.textContent = original;
+      btn.classList.remove('is-added');
+      delete btn.dataset.busy;
+    }, 1300);
+  }
+
+  /* Checkout: no backend — clear the cart, close the panel, confirm with a toast. */
+  $('#checkoutBtn').addEventListener('click', function () {
+    if (cart.length === 0) return;
+    cart = [];
+    commit();
+
+    var oc = bootstrap.Offcanvas.getInstance($('#cartPanel'));
+    if (oc) oc.hide();
+
+    bootstrap.Toast.getOrCreateInstance($('#orderToast')).show();
+  });
+
+  /* =========================================================
+     SCROLL REVEAL
+     ========================================================= */
+  function observeReveals() {
+    var items = document.querySelectorAll('.reveal:not(.is-visible)');
+
+    if (!('IntersectionObserver' in window)) {
+      items.forEach(function (el) { el.classList.add('is-visible'); });
+      return;
+    }
+
+    var io = new IntersectionObserver(function (entries, obs) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-visible');
+        obs.unobserve(entry.target);     // reveal once, then stop watching
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    items.forEach(function (el) { io.observe(el); });
+  }
+
+  /* =========================================================
+     NAVBAR: solidify on scroll + scroll-spy on the section links
+     ========================================================= */
+  function initNav() {
+    var nav = $('#siteNav');
+
+    var onScroll = function () {
+      nav.classList.toggle('is-scrolled', window.scrollY > 20);
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    // Close the mobile menu after tapping a link.
+    var menu = $('#navMenu');
+    menu.addEventListener('click', function (e) {
+      if (!e.target.closest('a')) return;
+      var collapse = bootstrap.Collapse.getInstance(menu);
+      if (collapse && menu.classList.contains('show')) collapse.hide();
+    });
+
+    // Highlight the link whose section is currently in view.
+    var links = Array.prototype.slice.call(document.querySelectorAll('.nav-link-x'));
+    var sections = links
+      .map(function (a) { return document.querySelector(a.getAttribute('href')); })
+      .filter(Boolean);
+
+    if (!('IntersectionObserver' in window) || !sections.length) return;
+
+    var spy = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        links.forEach(function (a) {
+          a.classList.toggle('is-active', a.getAttribute('href') === '#' + entry.target.id);
+        });
+      });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+
+    sections.forEach(function (s) { spy.observe(s); });
+  }
+
+  /* =========================================================
+     IMAGE FALLBACK
+     Remote photos can fail (offline, blocked host). Swap in the honeycomb
+     placeholder instead of showing a broken image icon.
+     ========================================================= */
+  document.addEventListener('error', function (e) {
+    var img = e.target;
+    if (!img || img.tagName !== 'IMG' || img.dataset.failed) return;
+    img.dataset.failed = '1';
+    var holder = img.parentElement;
+    if (holder) holder.classList.add('media-fallback');
+    img.style.visibility = 'hidden';
+  }, true);   // capture phase: 'error' does not bubble
+
+  /* =========================================================
+     INIT
+     ========================================================= */
+  renderProducts();
+  renderBadge();
+  renderCart();
+  observeReveals();
+  initNav();
+  $('#year').textContent = new Date().getFullYear();
+})();
+</script>
+</body>
+</html>
